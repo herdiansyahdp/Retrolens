@@ -1,16 +1,24 @@
 # 🖐️ RetroLens — Real-time Hand Gesture Portal Filter
 
-\<p align="center">   \<img src="[https://capsule-render.vercel.app/api?type=waving&color=0:0B1020,50:007F72,100:7467F0&height=210&section=header&text=RetroLens&fontSize=55&fontColor=ffffff&animation=fadeIn&fontAlignY=35](https://capsule-render.vercel.app/api?type=waving\&color=0:0B1020,50:007F72,100:7467F0\&height=210\&section=header\&text=RetroLens\&fontSize=55\&fontColor=ffffff\&animation=fadeIn\&fontAlignY=35)" alt="RetroLens Banner"/> \</p>
+<p align="center">
+  <img
+    src="https://capsule-render.vercel.app/api?type=waving&amp;color=0:0B1020,50:007F72,100:7467F0&amp;height=210&amp;section=header&amp;text=RetroLens&amp;fontSize=55&amp;fontColor=ffffff&amp;animation=twinkling&amp;fontAlignY=35"
+    alt="RetroLens Banner"
+    width="100%"
+  />
+</p>
 
-\<p align="center">   \<strong>A real-time visual effects application that transforms your webcam into an interactive portal using hand gestures.\</strong> \</p>
+<p align="center">
+  <strong>A real-time visual effects application that transforms your webcam into an interactive portal using hand gestures.</strong>
+</p>
 
-\<p align="center">
-&#x20; \<img src="[https://img.shields.io/badge/Python-3.13%2B-3776AB?style=for-the-badge&logo=python&logoColor=white](https://img.shields.io/badge/Python-3.13%2B-3776AB?style=for-the-badge\&logo=python\&logoColor=white)" alt="Python"/>
-&#x20; \<img src="[https://img.shields.io/badge/OpenCV-Contrib-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white](https://img.shields.io/badge/OpenCV-Contrib-5C3EE8?style=for-the-badge\&logo=opencv\&logoColor=white)" alt="OpenCV"/>
-&#x20; \<img src="[https://img.shields.io/badge/MediaPipe-Tasks%20API-0097A7?style=for-the-badge&logo=google&logoColor=white](https://img.shields.io/badge/MediaPipe-Tasks%20API-0097A7?style=for-the-badge\&logo=google\&logoColor=white)" alt="MediaPipe"/>
-&#x20; \<img src="[https://img.shields.io/badge/NumPy-Array%20Processing-013243?style=for-the-badge&logo=numpy&logoColor=white](https://img.shields.io/badge/NumPy-Array%20Processing-013243?style=for-the-badge\&logo=numpy\&logoColor=white)" alt="NumPy"/>
-&#x20; \<img src="[https://img.shields.io/badge/License-MIT-16A34A?style=for-the-badge](https://img.shields.io/badge/License-MIT-16A34A?style=for-the-badge)" alt="MIT License"/>
-\</p>
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.13%2B-3776AB?style=for-the-badge&amp;logo=python&amp;logoColor=white" alt="Python"/>
+  <img src="https://img.shields.io/badge/OpenCV-Contrib-5C3EE8?style=for-the-badge&amp;logo=opencv&amp;logoColor=white" alt="OpenCV"/>
+  <img src="https://img.shields.io/badge/MediaPipe-Tasks%20API-0097A7?style=for-the-badge&amp;logo=google&amp;logoColor=white" alt="MediaPipe"/>
+  <img src="https://img.shields.io/badge/NumPy-Array%20Processing-013243?style=for-the-badge&amp;logo=numpy&amp;logoColor=white" alt="NumPy"/>
+  <img src="https://img.shields.io/badge/License-MIT-16A34A?style=for-the-badge" alt="MIT License"/>
+</p>
 
 ---
 
@@ -479,20 +487,20 @@ Please retain the original copyright and license notices when redistributing or 
 
 ## 👨‍💻 Fork Maintainer
 
-\<p align="center">
+<p align="center">
 &#x20; \<strong>Herdiansyah Dwi Putra\</strong>\<br/>
 &#x20; Informatics Engineering Student
-\</p>
+</p>
 
-\<p align="center">
+<p align="center">
 &#x20; \<a href="[https://github.com/herdiansyahdp](https://github.com/herdiansyahdp)">
 &#x20;   \<img src="[https://img.shields.io/badge/GitHub-herdiansyahdp-181717?style=for-the-badge&logo=github&logoColor=white](https://img.shields.io/badge/GitHub-herdiansyahdp-181717?style=for-the-badge\&logo=github\&logoColor=white)" alt="GitHub"/>
 &#x20; \</a>
-\</p>
+</p>
 
-\<p align="center">
+<p align="center">
 &#x20; \<strong>Original Author:\</strong> \<a href="[https://github.com/syahdanfx](https://github.com/syahdanfx)">SyahdanFX\</a>
-\</p>
+</p>
 
 ---
 
@@ -502,10 +510,14 @@ If you find this project interesting, consider giving the original repository a 
 
 This fork is part of my journey in learning Python, computer vision, and real-time image processing.
 
-\<p align="center">
-&#x20; \<i>Explore gestures. Create portals. See the world differently. 🌀\</i>
-\</p>
+<p align="center">
+  <i>Explore gestures. Create portals. See the world differently. 🌀</i>
+</p>
 
-\<p align="center">
-&#x20; \<img src="[https://capsule-render.vercel.app/api?type=waving&color=0:7467F0,100:007F72&height=100&section=footer](https://capsule-render.vercel.app/api?type=waving\&color=0:7467F0,100:007F72\&height=100\&section=footer)" alt="Footer Banner"/>
-\</p>
+<p align="center">
+  <img
+    src="https://capsule-render.vercel.app/api?type=waving&amp;color=0:7467F0,100:007F72&amp;height=100&amp;section=footer"
+    alt="Footer Banner"
+    width="100%"
+  />
+</p>
