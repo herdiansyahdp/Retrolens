@@ -1,8 +1,12 @@
 """
 Retro Lens - Real-time Hand Gesture Filter Pipeline
+
+Versi MediaPipe Tasks API (kompatibel dengan Python 3.13+).
+Turunan dari Retrolens oleh syahdanfx (MIT License).
 """
 
 from dataclasses import dataclass
+import os
 import random
 import time
 from typing import Dict, List, Tuple, Callable
@@ -10,6 +14,20 @@ from typing import Dict, List, Tuple, Callable
 import cv2
 import mediapipe as mp
 import numpy as np
+from mediapipe.tasks import python as mp_python
+from mediapipe.tasks.python import vision
+
+
+MODEL_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "hand_landmarker.task")
+
+# 21 titik landmark tangan, dan sambungannya untuk digambar.
+HAND_CONNECTIONS = [
+    (0, 1), (1, 2), (2, 3), (3, 4),
+    (0, 5), (5, 6), (6, 7), (7, 8),
+    (5, 9), (9, 10), (10, 11), (11, 12),
+    (9, 13), (13, 14), (14, 15), (15, 16),
+    (13, 17), (17, 18), (18, 19), (19, 20), (0, 17),
+]
 
 
 @dataclass
@@ -143,7 +161,7 @@ class GeometryUtils:
 
 
 class PortalProcessor:
-    def __init__(self, cfg: PipelineConfig):
+    def __init__(self, cfg: PipelineConfig, model_path: str = MODEL_PATH):
         self.cfg = cfg
         self.filters: Dict[str, Callable[[np.ndarray], np.ndarray]] = {
             "dual-tone": FilterBank.dual_tone,
@@ -161,19 +179,22 @@ class PortalProcessor:
         self.filter_keys = list(self.filters.keys())
         self.active_filter_idx = 0
         self.is_3d_mode = False
-        
+
         self.last_switch_time = 0.0
         self.last_mode_toggle = 0.0
 
-        self.mp_hands = mp.solutions.hands
-        self.mp_draw = mp.solutions.drawing_utils
-        self.detector = self.mp_hands.Hands(
-            static_image_mode=False,
-            max_num_hands=2,
-            model_complexity=1,
-            min_detection_confidence=0.8,
+        options = vision.HandLandmarkerOptions(
+            base_options=mp_python.BaseOptions(model_asset_path=model_path),
+            running_mode=vision.RunningMode.VIDEO,
+            num_hands=2,
+            min_hand_detection_confidence=0.8,
+            min_hand_presence_confidence=0.8,
             min_tracking_confidence=0.8,
         )
+        self.detector = vision.HandLandmarker.create_from_options(options)
+
+    def close(self) -> None:
+        self.detector.close()
 
     @property
     def current_filter_name(self) -> str:
@@ -209,23 +230,32 @@ class PortalProcessor:
         cv2.polylines(frame, [poly], isClosed=True, color=(255, 255, 255), thickness=2)
         return frame
 
+    def _draw_hand(self, frame: np.ndarray, lm) -> None:
+        h, w = frame.shape[:2]
+        pts = [(int(p.x * w), int(p.y * h)) for p in lm]
+        for a, b in HAND_CONNECTIONS:
+            cv2.line(frame, pts[a], pts[b], (0, 255, 0), 2)
+        for p in pts:
+            cv2.circle(frame, p, 4, (0, 0, 255), -1)
+
     def process_frame(self, frame: np.ndarray) -> np.ndarray:
         frame = cv2.flip(frame, 1)
         frame = cv2.resize(frame, (self.cfg.frame_width, self.cfg.frame_height))
-        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        
-        results = self.detector.process(rgb)
+        rgb = np.ascontiguousarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb)
+
+        timestamp_ms = int(time.perf_counter() * 1000)
+        results = self.detector.detect_for_video(mp_image, timestamp_ms)
         now = time.time()
-        
+
         all_hand_tips = []
         fist_count = 0
         is_bowtie = False
 
-        if results.multi_hand_landmarks:
-            for hand_lm in results.multi_hand_landmarks:
-                self.mp_draw.draw_landmarks(frame, hand_lm, self.mp_hands.HAND_CONNECTIONS)
-                
-                lm = hand_lm.landmark
+        if results.hand_landmarks:
+            for lm in results.hand_landmarks:
+                self._draw_hand(frame, lm)
+
                 tips = [(int(lm[i].x * self.cfg.frame_width), int(lm[i].y * self.cfg.frame_height)) for i in [4, 8, 12, 16, 20]]
                 all_hand_tips.append(tips)
 
@@ -273,37 +303,44 @@ class PortalProcessor:
 
 
 def main() -> None:
+    if not os.path.exists(MODEL_PATH):
+        print(f"[ERROR] Model tidak ditemukan: {MODEL_PATH}")
+        print("Download hand_landmarker.task dulu (lihat README).")
+        return
+
     cfg = PipelineConfig()
     processor = PortalProcessor(cfg)
     cap = cv2.VideoCapture(cfg.cam_index)
 
-    if not cap.isOpened():
-        print("[ERROR] Kamera tidak terdeteksi!")
-        return
+    try:
+        if not cap.isOpened():
+            print("[ERROR] Kamera tidak terdeteksi!")
+            return
 
-    while True:
-        ret, frame = cap.read()
-        if not ret:
-            print("[ERROR] Gagal membaca frame kamera.")
-            break
+        while True:
+            ret, frame = cap.read()
+            if not ret:
+                print("[ERROR] Gagal membaca frame kamera.")
+                break
 
-        out_frame = processor.process_frame(frame)
-        cv2.imshow("RetroLens Engine", out_frame)
+            out_frame = processor.process_frame(frame)
+            cv2.imshow("RetroLens Engine", out_frame)
 
-        key = cv2.waitKey(1) & 0xFF
-        if key == ord("q"):
-            break
-        elif key == ord("c"):
-            processor.is_3d_mode = not processor.is_3d_mode
-        elif key == ord("n"):
-            processor.cycle_filter(1)
-        elif key == ord("p"):
-            processor.cycle_filter(-1)
-        elif key == ord("s"):
-            cv2.imwrite(f"cap_{int(time.time())}.png", out_frame)
-
-    cap.release()
-    cv2.destroyAllWindows()
+            key = cv2.waitKey(1) & 0xFF
+            if key == ord("q"):
+                break
+            elif key == ord("c"):
+                processor.is_3d_mode = not processor.is_3d_mode
+            elif key == ord("n"):
+                processor.cycle_filter(1)
+            elif key == ord("p"):
+                processor.cycle_filter(-1)
+            elif key == ord("s"):
+                cv2.imwrite(f"cap_{int(time.time())}.png", out_frame)
+    finally:
+        cap.release()
+        processor.close()
+        cv2.destroyAllWindows()
 
 
 if __name__ == "__main__":

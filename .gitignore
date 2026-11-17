@@ -1,11 +1,14 @@
 # Python
 __pycache__/
-*.pyc
-*.pyo
+*.py[cod]
 .Python
 venv/
+.venv/
 env/
 *.egg-info/
+
+# Model MediaPipe (diunduh manual, lihat README)
+*.task
 
 # Screenshot & output hasil testing
 cap_*.png
@@ -14,7 +17,7 @@ portal_screenshot_*.png
 !demo.png
 !screenshot-demo.png
 
-# OS junk
+# OS
 .DS_Store
 Thumbs.db
 
