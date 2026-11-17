@@ -488,18 +488,18 @@ Please retain the original copyright and license notices when redistributing or 
 ## 👨‍💻 Fork Maintainer
 
 <p align="center">
-&#x20; \<strong>Herdiansyah Dwi Putra\</strong>\<br/>
-&#x20; Informatics Engineering Student
+    &#x20; \<strong>Herdiansyah Dwi Putra\</strong>\<br/>
+    &#x20; Informatics Engineering Student
 </p>
 
 <p align="center">
-&#x20; \<a href="[https://github.com/herdiansyahdp](https://github.com/herdiansyahdp)">
-&#x20;   \<img src="[https://img.shields.io/badge/GitHub-herdiansyahdp-181717?style=for-the-badge&logo=github&logoColor=white](https://img.shields.io/badge/GitHub-herdiansyahdp-181717?style=for-the-badge\&logo=github\&logoColor=white)" alt="GitHub"/>
-&#x20; \</a>
+    &#x20; \<a href="[https://github.com/herdiansyahdp](https://github.com/herdiansyahdp)">
+    &#x20;   \<img src="[https://img.shields.io/badge/GitHub-herdiansyahdp-181717?style=for-the-badge&logo=github&logoColor=white](https://img.shields.io/badge/GitHub-herdiansyahdp-181717?style=for-the-badge\&logo=github\&logoColor=white)" alt="GitHub"/>
+    &#x20; \</a>
 </p>
 
 <p align="center">
-&#x20; \<strong>Original Author:\</strong> \<a href="[https://github.com/syahdanfx](https://github.com/syahdanfx)">SyahdanFX\</a>
+    &#x20; \<strong>Original Author:\</strong> \<a href="[https://github.com/syahdanfx](https://github.com/syahdanfx)">SyahdanFX\</a>
 </p>
 
 ---
